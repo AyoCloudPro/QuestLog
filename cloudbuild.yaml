@@ -1,0 +1,32 @@
+steps:
+  # 🧪 Run Pytest
+  - name: 'python:3.12-slim'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        pip install -r requirements.txt
+        pytest
+        
+  # Docker Build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 
+           'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA', 
+           '.']
+
+  # Docker Push
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 
+           'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA']
+
+  # Entrypoint, timeout and environment variables
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    timeout: 240s
+    args: ['compute', 'instances', 
+           'create-with-container', 'questlog-vm',
+           '--container-image', 
+           'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA']
+    env:
+      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'

@@ -1,0 +1,108 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0e6d6;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #6b4f4f;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header p {
+    margin: 5px 0;
+    font-style: italic;
+}
+
+header blockquote {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+    color: #dcdcdc;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+section {
+    width: 45%;
+    background-color: #fff8dc;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #aaa;
+}
+
+section h2 {
+    text-align: center;
+    color: #4b3832;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+form input, form textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px;
+    background-color: #8b5e3c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #a0522d;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f5f5dc;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+li h3 {
+    margin: 0 0 5px;
+}
+
+li p {
+    margin: 0 0 10px;
+}
+
+li button {
+    margin-right: 5px;
+    padding: 5px 10px;
+    background-color: #6b4f4f;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+li button:hover {
+    background-color: #5a3e3e;
+}

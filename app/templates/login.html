@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QuestLog — Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <header>
+    <h1>QuestLog</h1>
+    <p>Enter your name comrade to begin your journey</p>
+    <blockquote>“Every journey begins with a single step… or click.”</blockquote>
+  </header>
+
+  <main>
+    <section>
+      {%- with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for msg in messages %}
+            <div class="flash">{{ msg }}</div>
+          {% endfor %}
+        {% endif %}
+      {%- endwith %}
+
+      <form id="login-form" method="POST" action="{{ url_for('auth.login') }}">
+        {{ form.csrf_token }}
+        {{ form.username(id="new-task-title", placeholder="Adventurer Name") }}
+        <button type="submit">{{ form.submit.label.text }}</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+  <script>
+    // No additional JS needed for login, but you could add animations here
+  </script>
+</body>
+</html>

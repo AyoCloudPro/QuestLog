@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QuestLog Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>QuestLog</h1>
+        <p>{{ greeting }}</p>
+        <blockquote>"{{ quote }}"</blockquote>
+    </header>
+
+    <main>
+        <!-- Task Section -->
+        <section id="tasks">
+            <h2>Quests</h2>
+            <form id="add-task-form">
+                <input type="text" id="new-task-title" placeholder="New quest title" required>
+                <button type="submit">Add Quest</button>
+            </form>
+            <ul id="task-list">
+                {% for task in tasks %}
+                <li data-id="{{ task.id }}">
+                    <span>{{ task.title }}</span>
+                    <button class="progress-btn">In Progress</button>
+                    <button class="complete-btn">Complete</button>
+                    <button class="delete-btn">Delete</button>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Notes Section -->
+        <section id="notes">
+            <h2>Grimoires</h2>
+            <form id="add-note-form">
+                <input type="text" id="new-note-title" placeholder="Note title" required>
+                <textarea id="new-note-content" placeholder="Note content" required></textarea>
+                <button type="submit">Add Grimoire</button>
+            </form>
+            <ul id="note-list">
+                {% for note in notes %}
+                <li data-id="{{ note.id }}">
+                    <h3>{{ note.title }}</h3>
+                    <p>{{ note.content }}</p>
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
