@@ -29,7 +29,7 @@ def test_login_new_user(client):
     response = client.post('/login', data={'username': 'newbie'}, follow_redirects=True)
 
     assert response.status_code == 200
-    assert b'Welcome to QuestLog!' in response.data
+    assert b'<title>QuestLog Dashboard</title>' in response.data
 
     user = User.query.filter_by(username='newbie').first()
     assert user is not None
