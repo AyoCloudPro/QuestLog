@@ -49,7 +49,7 @@ def logout():
     logout_user()
     flash('Goodbye for now. We await your return.')
 
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
 
 
 # Authenicated route
