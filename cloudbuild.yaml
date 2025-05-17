@@ -32,11 +32,11 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
-      [
-        'run', 'deploy', 'questlog-service',
-        '--image', 'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA',
-        '--region', 'us-central1',
-        '--platform', 'managed',
-        '--allow-unauthenticated'
-      ]
+      - run
+      - deploy
+      - questlog-service
+      - --image=us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA
+      - --region=us-central1
+      - --platform=managed
+      - --allow-unauthenticated
 
