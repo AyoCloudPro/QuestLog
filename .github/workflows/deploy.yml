@@ -1,0 +1,37 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main  # or whichever branch you want to trigger deploys
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Google Cloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE=gcr.io/${{ secrets.GCP_PROJECT_ID }}/questlog
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
+      - name: Deploy to Cloud Run
+        run: |
+          IMAGE=gcr.io/${{ secrets.GCP_PROJECT_ID }}/questlog
+          gcloud run deploy questlog \
+            --image $IMAGE \
+            --region ${{ secrets.GCP_REGION }} \
+            --platform managed \
+            --allow-unauthenticated
