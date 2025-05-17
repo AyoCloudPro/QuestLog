@@ -2,7 +2,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-  # 🧪 Run Pytest
+  # 🧪 Run tests
   - name: 'python:3.12-slim'
     entrypoint: bash
     args:
@@ -11,25 +11,32 @@ steps:
         pip install -r requirements.txt
         pytest
 
-  # Docker Build
+  # 🐳 Docker build
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA', 
-           '.']
+    args:
+      [
+        'build', '-t',
+        'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA',
+        '.'
+      ]
 
-  # Docker Push
+  # ☁️ Docker push
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 
-           'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA']
+    args:
+      [
+        'push',
+        'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA'
+      ]
 
-  # Entrypoint, timeout and environment variables
+  # 🚀 Deploy to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    timeout: 240s
-    args: ['compute', 'instances', 
-           'create-with-container', 'questlog-vm',
-           '--container-image', 
-           'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA']
-    env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+    entrypoint: gcloud
+    args:
+      [
+        'run', 'deploy', 'questlog-service',
+        '--image', 'us-central1-docker.pkg.dev/steel-utility-459421-h2/questlog-repo/questlog-image:$SHORT_SHA',
+        '--region', 'us-central1',
+        '--platform', 'managed',
+        '--allow-unauthenticated'
+      ]
+
